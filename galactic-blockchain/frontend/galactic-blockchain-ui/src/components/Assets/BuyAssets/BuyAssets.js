@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 //************************************** Components React ***************************************
 import BuyWeapons from './BuyWeapons'
@@ -39,13 +39,15 @@ export default function BuyAssets() {
     const [creditsCurrentUser, setCreditsCurrentUser] = useState(null)
     const handleCreditsCurrentUser = creditsCurrentUser => setCreditsCurrentUser(creditsCurrentUser)
 
+    const groupCreditsMemorized = useCallback(async () => await groupCredits(currentUser.keys, 'credit'), [currentUser.keys])
+
+
     useEffect(() => {
-        console.log('Rendering 1° BuyAssets')
-        if (isBuyed)
-          groupCredits(currentUser.keys)
+        if (isBuyed || !creditsCurrentUser)
+          groupCreditsMemorized()
             .then(creditsCurrentUser => handleCreditsCurrentUser(creditsCurrentUser))
             .then(handleIsBuyed(false))
-      }, [isBuyed]);
+      }, [isBuyed, groupCreditsMemorized, creditsCurrentUser]);
 
     return (
         <div className={classes.root}>

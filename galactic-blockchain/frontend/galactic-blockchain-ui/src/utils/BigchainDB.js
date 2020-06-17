@@ -52,12 +52,12 @@ async function getMyAssets(ownerKeypair, flag=null){
     try {
         const ownerOutputs = await conn.listOutputs(ownerKeypair.publicKey, false)
         const myAssets = []
+        var i;
+        var asset
         
         if (flag) {
-            var i;
             for (i = 0; i < ownerOutputs.length; i++) {
                 const transaction = await conn.getTransaction(ownerOutputs[i].transaction_id)
-                var asset
 
                 transaction.operation === 'CREATE' 
                     ? asset = transaction.asset.data
@@ -74,10 +74,8 @@ async function getMyAssets(ownerKeypair, flag=null){
                 }
             }
         } else {
-            var i;
             for (i = 0; i < ownerOutputs.length; i++) {
                 const transaction = await conn.getTransaction(ownerOutputs[i].transaction_id)
-                var asset
 
                 transaction.operation === 'CREATE' 
                     ? asset = transaction.asset.data 

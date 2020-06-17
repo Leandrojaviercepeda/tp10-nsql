@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 //************************************ Components MAteria-UI ************************************
 import TransferButton from '../TransferButton'
@@ -94,18 +94,21 @@ export default function MyGalacticCoins() {
     setPage(0);
   };
 
-  useEffect(() => {
-    console.log('Rendering 1° MyGalacticCoins')
-    if (handleIsTransferred)
-      getMyAssets(currentUser.keys, 'credit')
-        .then(assetsCurrentUser => handleAssets(assetsCurrentUser))
-        .then(() => handleIsTransferred(false))
-  }, [isTransferred]);
+  const getMyAssetsMemorized = useCallback(async () => await getMyAssets(currentUser.keys, 'credit'), [currentUser.keys])
+
 
   useEffect(() => {
-    console.log('Rendering 2° MyGalacticCoins')
-    if (assets.length !== 0){
-      const assetsParsed = assets.map(asset => createData(asset.asset.name, asset.asset.price, asset.amount, <TransferButton asset={asset} handleIsTransferred={handleIsTransferred}/>))
+    if (isTransferred || assets.length === 0)
+      getMyAssetsMemorized()
+        .then(assetsCurrentUser => handleAssets(assetsCurrentUser))
+        .then(() => handleIsTransferred(false))
+  }, [isTransferred, getMyAssetsMemorized, assets.length]);
+
+  useEffect(() => {
+    if (assets.length !== 0) {
+      const assetsParsed = assets.map(asset => 
+        createData(asset.asset.name, asset.asset.price, asset.amount, <TransferButton asset={asset} handleIsTransferred={handleIsTransferred}/>)
+      )
       handleRows(assetsParsed)
     }
   }, [assets]);

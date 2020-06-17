@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 //************************************ Components React ************************************
 import BuyButton from '../BuyButton'
@@ -70,7 +70,6 @@ const useStyles = makeStyles({
 
 export default function BuyWeapons(props) {
   const DarthVader = JSON.parse(localStorage.getItem('users')).find(user => user.name === 'Darth Vader')
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'))
 
   const classes = useStyles();
 
@@ -92,21 +91,26 @@ export default function BuyWeapons(props) {
     setPage(0);
   };
 
-  useEffect(() => {
-    console.log('Rendering 1° BuyWeapons')
-    getMyAssets(DarthVader.keys, 'weapon')
-      .then(assetsCurrentUser => handleAssets(assetsCurrentUser))
-  }, []);
+  const getMyAssetsMemorized = useCallback(async () => await getMyAssets(DarthVader.keys, 'weapon'), [DarthVader.keys])
 
   useEffect(() => {
-    console.log('Rendering 2° BuyWeapons')
+    if (assets.length === 0)
+      getMyAssetsMemorized()
+        .then(assetsSeller => handleAssets(assetsSeller))
+  }, [getMyAssetsMemorized, assets.length]);
+
+  useEffect(() => {
     if (assets.length !== 0){
       const assetsParsed = assets.map(asset => 
-        createData(asset.asset.name, asset.asset.price, asset.amount, <BuyButton buyer={currentUser} seller={DarthVader} asset={asset} {...props}/>)
+        createData(asset.asset.name, asset.asset.price, asset.amount, 
+          <BuyButton 
+            asset={asset} 
+            {...props}/>
+        )
       )
       handleRows(assetsParsed)
     }
-  }, [assets]);
+  }, [assets, props]);
 
   return (
     <Paper className={classes.root}>

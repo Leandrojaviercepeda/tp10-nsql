@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
 export default function BuyButton(props) {
     const classes = useStyles()
 
+    const DarthVader = JSON.parse(localStorage.getItem('users')).find(user => user.name === 'Darth Vader')
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false)
     const handleToggle = () => setOpen(!open)
@@ -46,10 +49,10 @@ export default function BuyButton(props) {
 
     const handleBuy = async () => {
         try {
-            const responseBuy = await buyAsset(props.buyer.keys, props.seller.keys, props.asset)
+            const responseBuy = await buyAsset(currentUser.keys, DarthVader.keys, props.asset)
             return responseBuy
                 ? handleStatus(true, 'success', '¡El Arma ha sido comprada exitosamente! :)')
-                : handleStatus(true, 'warning', '¡Ooops! Ha ocurrido un error al intentar comprar :(')
+                : handleStatus(true, 'warning', '¡Ooops! Ha ocurrido un error al intentar comprar :/ ¡Revisa que tus creditos sean suficientes! ')
         } catch (error) {
             return handleStatus(true, 'error', '¡Ooops! Ha ocurrido un inesperado :/')
         }
