@@ -16,7 +16,7 @@ const assets = [[
         {type: "weapon", name: 'EZRA’S LIGHTSABER', price: '2500'},
     ],
     [
-        {type: "credit", coin: 'imperial', price: '1'},
+        {type: "credit", name: 'imperial', price: '1'},
     ]
 ]
 

@@ -105,9 +105,9 @@ async function getMyAssets(ownerKeypair, flag=null){
 async function groupCredits(ownerKeypair) {
     try {
         const myAssets = await getMyAssets(ownerKeypair, "credit")
-        var amountCredits
+        var amountCredits = 0
         var i;
-        for (i = 0; i < myAssets.length; i++) amountCredits = myAssets[i].amount
+        for (i = 0; i < myAssets.length; i++) amountCredits = amountCredits + parseInt(myAssets[i].amount)
 
         return myAssets.length === 0 ? 0 : amountCredits
     } catch (error) {

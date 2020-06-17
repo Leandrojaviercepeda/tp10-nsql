@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import capitalize from '../../../utils/capitalize'
+import capitalize from '../../../../utils/capitalize'
 
 //************************************** Icons MAteria-UI ***************************************
 import MyLocationIcon from '@material-ui/icons/MyLocation';
@@ -9,7 +9,7 @@ import { Grid, TextField, Button, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
 //************************************ BigchainDb ************************************
-import {createAsset} from '../../../utils/BigchainDB'
+import {createAsset} from '../../../../utils/BigchainDB'
 
 const useStyles = makeStyles((theme) => ({
     grid:{
@@ -84,7 +84,7 @@ export default function CreateWeapon() {
                     type="text"
                     id="nombre"
                     name="nombre"
-                    label="lightsaber"
+                    label="nombre"
                     fullWidth
                     onChange={e => handleName(capitalize(e.target.value))}
                     />
@@ -95,7 +95,7 @@ export default function CreateWeapon() {
                     required
                     id="precio"
                     name="precio"
-                    label="$200"
+                    label="precio"
                     fullWidth
                     onChange={e => handlePrice(`${e.target.value}`)}
                     />
@@ -106,7 +106,7 @@ export default function CreateWeapon() {
                     type="number"
                     id="cantidad"
                     name="cantidad"
-                    label="100"
+                    label="cantidad"
                     fullWidth
                     inputProps={{min: '1'}}
                     onChange={e => handleAmount(e.target.value)}

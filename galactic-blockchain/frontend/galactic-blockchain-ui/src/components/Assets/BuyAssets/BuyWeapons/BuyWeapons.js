@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
-//************************************ Components MAteria-UI ************************************
-import TransferButton from '../TransferButton'
+//************************************ Components React ************************************
+import BuyButton from '../BuyButton'
 
 //************************************ Components MAteria-UI ************************************
 import {
@@ -29,11 +29,11 @@ const columns = [
   { id: 'name', label: 'Nombre', minWidth: 170 },
   { id: 'price', label: 'Precio', minWidth: 100 },
   { id: 'amount', label: 'Cantidad', minWidth: 100 },
-  { id: 'transfer', label: 'Transferir', minWidth: 100 },
+  { id: 'buy', label: 'Comprar', minWidth: 100 },
 ];
 
-function createData(name, price, amount, transfer) {
-  return { name, price, amount, transfer };
+function createData(name, price, amount, buy) {
+  return { name, price, amount, buy };
 }
 
 const StyledTableCell = withStyles((theme) => ({
@@ -68,8 +68,10 @@ const useStyles = makeStyles({
 
 
 
-export default function MyGalacticCoins() {
+export default function BuyWeapons(props) {
+  const DarthVader = JSON.parse(localStorage.getItem('users')).find(user => user.name === 'Darth Vader')
   const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+
   const classes = useStyles();
 
   const [page, setPage] = React.useState(0);
@@ -78,11 +80,11 @@ export default function MyGalacticCoins() {
   const [rows, setRows] = useState([])
   const handleRows = rows => setRows(rows) 
 
-  const [isTransferred, setIsTransferred] = useState(false)
-  const handleIsTransferred = bool => setIsTransferred(bool)
-
   const [assets, setAssets] = useState([])
   const handleAssets = assets => setAssets(assets)
+
+  const [isTransferred, setIsTransferred] = useState(false)
+  const handleIsTransferred = bool => setIsTransferred(bool)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -94,17 +96,17 @@ export default function MyGalacticCoins() {
   };
 
   useEffect(() => {
-    console.log('Rendering 1° MyGalacticCoins')
-    if (handleIsTransferred)
-      getMyAssets(currentUser.keys, 'weapon')
-        .then(assetsCurrentUser => handleAssets(assetsCurrentUser))
-        .then(() => handleIsTransferred(false))
-  }, [isTransferred]);
+    console.log('Rendering 1° BuyWeapons')
+    getMyAssets(DarthVader.keys, 'weapon')
+      .then(assetsCurrentUser => handleAssets(assetsCurrentUser))
+  }, []);
 
   useEffect(() => {
-    console.log('Rendering 2° MyGalacticCoins')
+    console.log('Rendering 2° BuyWeapons')
     if (assets.length !== 0){
-      const assetsParsed = assets.map(asset => createData(asset.asset.name, asset.asset.price, asset.amount, <TransferButton asset={asset} handleIsTransferred={handleIsTransferred}/>))
+      const assetsParsed = assets.map(asset => 
+        createData(asset.asset.name, asset.asset.price, asset.amount, <BuyButton handleIsTransferred={handleIsTransferred} buyer={currentUser} seller={DarthVader} asset={asset} {...props}/>)
+      )
       handleRows(assetsParsed)
     }
   }, [assets]);

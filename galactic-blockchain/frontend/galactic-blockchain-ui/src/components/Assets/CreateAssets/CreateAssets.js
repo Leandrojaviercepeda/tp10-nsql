@@ -1,5 +1,7 @@
 import React from 'react';
 import image from '../../styles/img/logo512.png'
+
+//************************************** Components React ***************************************
 import CreateCredit from './CreateCredit'
 import CreateWeapon from './CreateWeapon'
 

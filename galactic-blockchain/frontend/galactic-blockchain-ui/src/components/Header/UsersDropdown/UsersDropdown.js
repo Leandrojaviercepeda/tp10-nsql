@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { useHistory } from 'react-router-dom'
 
 //************************************ Components MAteria-UI ************************************
 import {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 //********************************************* Components *********************************************
 export default function UsersDropdown(props) {
+  const history = useHistory()
   const classes = useStyles();
 
   const users = JSON.parse(localStorage.getItem('users'));
@@ -52,7 +54,7 @@ export default function UsersDropdown(props) {
   }
 
   function handleCurrentUser(user) {
-    return localStorage.setItem('currentUser', JSON.stringify(user))
+    return localStorage.setItem('currentUser', JSON.stringify(user)) & history.push('/home')
   }
 
   return (

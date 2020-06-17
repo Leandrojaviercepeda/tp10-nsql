@@ -3,6 +3,7 @@ import React from 'react';
 //************************************ Components React ************************************
 import MyGalacticCoins from './MyGalacticCoins';
 import MyWeapons from './MyWeapons';
+
 //************************************ Components MAteria-UI ************************************
 import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: 5,
       marginRight: 15,
       marginLeft: 15,
-      paddingBottom: 25,
+      paddingBottom: 5,
       color: theme.palette.text.secondary,
     },
     grid:{
@@ -32,15 +33,15 @@ export default function MyAssets() {
     return (
         <div className={classes.root}>
 
-          <Grid container justify="center" alignItems="center" spacing={1}>
-            <Grid item xs={6}>
+          <Grid container justify="center" alignItems="center" spacing={3}>
+            <Grid item xs={4}>
               <Paper elevation={2}  className={classes.paper}>
                 <Typography color="textPrimary" align="center" variant="h5"> Mis Activos </Typography>
               </Paper>
             </Grid>
           </Grid>
 
-          <Grid container spacing={1}>
+          <Grid container direction="row" justify="space-around" alignItems="center" spacing={1}>
               <Grid item xs={6}>
                 <Paper elevation={5}  className={classes.paper}>
                     <MyGalacticCoins/>
@@ -52,7 +53,7 @@ export default function MyAssets() {
                   </Paper>
               </Grid>
           </Grid>
-          
+
       </div>
     )
 }
