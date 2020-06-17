@@ -83,9 +83,6 @@ export default function BuyWeapons(props) {
   const [assets, setAssets] = useState([])
   const handleAssets = assets => setAssets(assets)
 
-  const [isTransferred, setIsTransferred] = useState(false)
-  const handleIsTransferred = bool => setIsTransferred(bool)
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -105,7 +102,7 @@ export default function BuyWeapons(props) {
     console.log('Rendering 2° BuyWeapons')
     if (assets.length !== 0){
       const assetsParsed = assets.map(asset => 
-        createData(asset.asset.name, asset.asset.price, asset.amount, <BuyButton handleIsTransferred={handleIsTransferred} buyer={currentUser} seller={DarthVader} asset={asset} {...props}/>)
+        createData(asset.asset.name, asset.asset.price, asset.amount, <BuyButton buyer={currentUser} seller={DarthVader} asset={asset} {...props}/>)
       )
       handleRows(assetsParsed)
     }
