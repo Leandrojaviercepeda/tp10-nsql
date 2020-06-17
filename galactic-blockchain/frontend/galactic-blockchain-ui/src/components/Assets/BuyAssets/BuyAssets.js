@@ -41,9 +41,10 @@ export default function BuyAssets() {
 
     useEffect(() => {
         console.log('Rendering 1° BuyAssets')
-
-        groupCredits(currentUser.keys)
-          .then(creditsCurrentUser => handleCreditsCurrentUser(creditsCurrentUser))
+        if (isBuyed)
+          groupCredits(currentUser.keys)
+            .then(creditsCurrentUser => handleCreditsCurrentUser(creditsCurrentUser))
+            .then(handleIsBuyed(false))
       }, [isBuyed]);
 
     return (

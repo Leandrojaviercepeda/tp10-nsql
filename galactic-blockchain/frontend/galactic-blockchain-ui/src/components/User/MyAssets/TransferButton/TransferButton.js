@@ -61,7 +61,7 @@ export default function TransferButton(props) {
             if (!currentUser || !ownerAfter || !props.asset || !amount)
                 return handleStatus(true, 'warning', '¡Ooops! ¡Para realizar la transferencia, todos los campos deben estar completos!')
             
-            if (amount > props.asset.amount)
+            if (amount <= props.asset.amount)
                 return handleStatus(true, 'warning', '¡Ooops! ¡No puede transferir activos que no posee!')
 
             const responseBuy = await transferAsset(currentUser.keys, ownerAfter.keys, props.asset, amount)
@@ -158,7 +158,7 @@ export default function TransferButton(props) {
                         </Paper>
                         {
                             status.showMessage 
-                            ? <Alert severity={status.type} onClick={() => handleClose() & props.handleIsTransferred(true)} style={{marginTop: '5px'}}><AlertTitle>{status.type}</AlertTitle> - {status.message}</Alert>
+                            ? <Alert severity={status.type} onClick={() => handleClose() & props.handleIsTransferred(true) & handleStatus(false)} style={{marginTop: '5px'}}><AlertTitle>{status.type}</AlertTitle> - {status.message}</Alert>
                             : ''
                         }
                         </Grid>

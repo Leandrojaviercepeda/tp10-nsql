@@ -114,7 +114,7 @@ export default function BuyButton(props) {
                         </Paper>
                         {
                             status.showMessage 
-                            ? <Alert severity={status.type} onClick={() => handleClose() & props.handleIsBuyed(true)} style={{marginTop: '5px'}}><AlertTitle>{status.type}</AlertTitle> - {status.message}</Alert>
+                            ? <Alert severity={status.type} onClick={() => handleClose() & props.handleIsBuyed(true) & handleStatus(false)} style={{marginTop: '5px'}}><AlertTitle>{status.type}</AlertTitle> - {status.message}</Alert>
                             : ''
                         }
                         </Grid>
