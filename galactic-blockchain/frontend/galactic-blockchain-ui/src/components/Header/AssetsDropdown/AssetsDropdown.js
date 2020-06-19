@@ -9,6 +9,7 @@ import {
   ListItemIcon,
   ListItemText,
   Tooltip,
+  CircularProgress,
 } from '@material-ui/core';
 
 //************************************** Icons MAteria-UI ***************************************
@@ -81,44 +82,56 @@ export default function AssetsDropdown() {
         <MoreVertIcon/>
       </IconButton>
     </Tooltip>
-      <StyledMenu
-        id="customized-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {
-          currentUser.name
-          ?
-            <StyledMenuItem>
-              <ListItemIcon onClick={ () => history.push(`/users/${currentUser.name}/assets`)}>
-                <StorageIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary="Mis Activos" />
-            </StyledMenuItem>
-          : ''
-        }
-        
-        {
-          currentUser.name === 'Darth Vader'
-          ? 
-            <StyledMenuItem>
-              <ListItemIcon onClick={ () => history.push(`/assets/create`) }>
-                <AddCircleIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary="Crear Activos" />
-            </StyledMenuItem>
-          : 
-            <StyledMenuItem>
-              <ListItemIcon onClick={ () => history.push(`/assets/buy`) }>
-                <LocalGroceryStoreIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary="Comprar Activos" />
-            </StyledMenuItem>
-        }
 
-      </StyledMenu>
+      {
+        currentUser 
+        ? 
+          <StyledMenu
+            id="customized-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            {
+              currentUser.name
+              ?
+                <StyledMenuItem>
+                  <ListItemIcon onClick={ () => history.push(`/users/${currentUser.name}/assets`)}>
+                    <StorageIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Mis Activos" />
+                </StyledMenuItem>
+              : ''
+            }
+            
+            {
+              currentUser.name === 'Darth Vader'
+              ? 
+                <StyledMenuItem>
+                  <ListItemIcon onClick={ () => history.push(`/assets/create`) }>
+                    <AddCircleIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Crear Activos" />
+                </StyledMenuItem>
+              : 
+                <StyledMenuItem>
+                  <ListItemIcon onClick={ () => history.push(`/assets/buy`) }>
+                    <LocalGroceryStoreIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Comprar Activos" />
+                </StyledMenuItem>
+            }
+
+          </StyledMenu>
+        : 
+          <StyledMenu id="customized-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+            <StyledMenuItem>
+              <CircularProgress color="secondary" size={20}/>
+            </StyledMenuItem>
+          </StyledMenu>
+      }
+    
     </div>
   );
 }
